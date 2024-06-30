@@ -1,0 +1,18 @@
+// prisma/schema.prisma
+datasource db {
+  provider  = "mysql"
+  url  	    = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Board {
+  id        Int      @id @default(autoincrement())
+  w     String?
+  h      Int?
+  type String?
+  data Json
+}
