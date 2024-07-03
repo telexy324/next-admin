@@ -1,6 +1,6 @@
 import {  NextRequest } from 'next/server'
 import { sleep } from '@/utils';
-import {db} from "@/utils/db";
+import { db } from "@/utils/db";
 
 // const boardList = [
 //     {
