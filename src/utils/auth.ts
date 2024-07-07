@@ -1,6 +1,7 @@
 import {
   createHmac
 } from 'crypto';
+import { auth } from "@/auth";
 
 
 
@@ -9,3 +10,9 @@ export const encrypt = (content: string) => {
   hash.update(content)
   return hash.digest('hex')
 }
+
+export const currentUser = async () => {
+  const session = await auth();
+
+  return session?.user;
+};
