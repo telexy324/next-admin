@@ -4,6 +4,8 @@ import { Button, Form, Input, Segmented, type FormProps } from 'antd';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { loginApi, registerApi } from './api';
+import { createSchemaFieldRule } from 'antd-zod';
+import { LoginSchema, RegisterSchema } from "@/schemas";
 
 import styles from './index.module.less';
 
@@ -17,6 +19,8 @@ type FieldType = {
 const mode = ['登录', '注册'];
 
 export default function Home() {
+  const loginRule = createSchemaFieldRule(LoginSchema);
+  const registerRule = createSchemaFieldRule(RegisterSchema);
   const t = useTranslations();
   const [curMode, setCurMode] = useState(mode[0]);
   const [form] = Form.useForm();
@@ -121,25 +125,16 @@ export default function Home() {
             {
               curMode === mode[0] ? 
               <>
-                <Form.Item<FieldType>
+                <Form.Item
                   name="email"
-                  rules={[
-                    {
-                      type: 'email',
-                      message: '邮箱不合法!',
-                    },
-                    {
-                      required: true,
-                      message: '请输入邮箱',
-                    },
-                  ]}
+                  rules={[loginRule]}
                 >
                   <Input placeholder='请输入邮箱' size='large' variant="filled" />
                 </Form.Item>
 
-                <Form.Item<FieldType>
-                  name="pwd"
-                  rules={[{ required: true, message: '请输入密码' }]}
+                <Form.Item
+                  name="password"
+                  rules={[loginRule]}
                 >
                   <Input.Password size='large' placeholder='请输入密码' variant="filled" />
                 </Form.Item>
@@ -151,25 +146,16 @@ export default function Home() {
                 </Form.Item>
               </> :
               <>
-              <Form.Item<FieldType>
+              <Form.Item
                   name="email"
-                  rules={[
-                    {
-                      type: 'email',
-                      message: '邮箱不合法!',
-                    },
-                    {
-                      required: true,
-                      message: '请输入邮箱',
-                    },
-                  ]}
+                  rules={[registerRule]}
                 >
                   <Input placeholder='请输入邮箱' size='large' variant="filled" />
                 </Form.Item>
 
-                <Form.Item<FieldType>
-                  name="pwd"
-                  rules={[{ required: true, message: '请输入密码' }]}
+                <Form.Item
+                  name="password"
+                  rules={[registerRule]}
                 >
                   <Input.Password size='large' placeholder='请输入密码' variant="filled" />
                 </Form.Item>
